@@ -5,3 +5,4 @@ CARACTERÍSTICAS
 ===============
 
 - Registro de projectos
+- Registro de incidencia por proyecto
