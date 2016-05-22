@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 import os
 from project_manager.utils import get_secret
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 SECRET_KEY = get_secret('SECRET_KEY')
 
@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'project_manager_auth',
     'projects',
     'issues',
 ]
@@ -49,7 +50,7 @@ ROOT_URLCONF = 'project_manager.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -99,3 +100,32 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    # 'filters': {
+    #     'require_debug_false': {
+    #         '()': 'django.utils.log.RequireDebugFalse'
+    #     }
+    # },
+    'formatters': {
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'utils.log.ColorizingStreamHandler',
+            'formatter': 'simple'
+        },
+    },
+    'loggers': {
+        'debug': {
+            'handlers': ['console'],
+            'propagate': True,
+            'level': 'INFO',
+        }
+    }
+}

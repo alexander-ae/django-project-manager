@@ -1,0 +1,13 @@
+{% extends 'project_manager_auth/_base.html' %}
+
+{% block title %}Login{% endblock title %}
+
+{% block content %}
+    <h1>Login</h1>
+    <form action="{% url 'project_manager_auth:login' %}" method='POST'>
+        {% csrf_token %}
+        {{ form.as_p }}
+        {{ form.errors }}
+        <input type="submit">
+    </form>
+{% endblock content %}

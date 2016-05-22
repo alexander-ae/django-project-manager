@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block meta_title %}{% endblock meta_title %}</title>
+</head>
+
+<body>
+  {% include 'common/_messages.html' %}
+
+  {% block content %}
+  {% endblock content %}
+</body>
+</html>
