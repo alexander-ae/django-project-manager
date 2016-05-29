@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib.auth.models import User
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium.webdriver.firefox.webdriver import WebDriver
 
 from .constants import LOGIN_URL, DASHBOARD_URL
 
 
-class ProjectManagerAuthTests(LiveServerTestCase):
-    # serialized_rollback = True
+class ProjectManagerAuthTests(StaticLiveServerTestCase):
 
     @classmethod
     def setUpClass(self):

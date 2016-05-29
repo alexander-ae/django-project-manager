@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import logging
-from datetime import datetime
 
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.views import logout_then_login
 from django.shortcuts import render_to_response as render, redirect
 from django.template import RequestContext as ctx
 from django.http import HttpResponse
+from django.utils import timezone
 
 
 from .constants import DASHBOARD_URL, LOGIN_URL
@@ -30,7 +30,7 @@ def login(request):
 
             if user is not None:
                 if user.is_active:
-                    user.last_login = datetime.now()
+                    user.last_login = timezone.now()
                     user.save()
                     auth_login(request, user)
 
