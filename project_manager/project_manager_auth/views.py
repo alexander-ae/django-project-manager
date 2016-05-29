@@ -3,7 +3,6 @@
 import logging
 from datetime import datetime
 
-from django.contrib import messages
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.views import logout_then_login
 from django.shortcuts import render_to_response as render, redirect
@@ -42,11 +41,9 @@ def login(request):
 
                     return redirect(DASHBOARD_URL)
                 else:
-                    messages.add_message(request, messages.WARNING,
-                        'El usuario no se encuentra activo')
+                    form.add_error(None, 'El usuario no se encuentra activo')
             else:
-                messages.add_message(request, messages.WARNING,
-                        u'Las credenciales son inválidas')
+                form.add_error(None, u'Las credenciales son inválidas')
     else:
         form = LoginForm()
 

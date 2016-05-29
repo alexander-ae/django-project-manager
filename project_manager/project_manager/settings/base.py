@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     'project_manager_auth',
     'projects',
     'issues',
+
+    'floppyforms',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -100,6 +102,10 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 
 LOGGING = {
     'version': 1,

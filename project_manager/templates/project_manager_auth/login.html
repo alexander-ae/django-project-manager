@@ -1,13 +1,25 @@
 {% extends 'project_manager_auth/_base.html' %}
+{% load floppyforms %}
 
 {% block title %}Login{% endblock title %}
 
 {% block content %}
-    <h1>Login</h1>
-    <form action="{% url 'project_manager_auth:login' %}" method='POST'>
-        {% csrf_token %}
-        {{ form.as_p }}
-        {{ form.errors }}
-        <input type="submit">
+<div class="login-box">
+  <div class="login-logo">
+    <a href="#"><b>SGP</b> v2</a>
+  </div>
+
+  <div class="login-box-body">
+    <form action="{% url 'project_manager_auth:login' %}" method="post">
+      {% csrf_token %}
+      {% form form %}
+
+      <div class="row">
+        <div class="col-xs-4">
+          <button type="submit" class="btn btn-primary btn-block btn-flat" tabindex="3">Ingresar</button>
+        </div>
+      </div>
     </form>
+  </div>
+</div>
 {% endblock content %}
