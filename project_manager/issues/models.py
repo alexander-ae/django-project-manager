@@ -9,7 +9,6 @@ from projects.models import Project
 
 
 class IssueStatus(ExtendedEnum):
-
     ''' Lista de posibles estados de una incidencia '''
 
     # incidencia pendiente
@@ -28,7 +27,6 @@ class IssueStatus(ExtendedEnum):
 
 
 class IssuePriority(ExtendedEnum):
-
     ''' Lista de prioridades en una incidencia '''
 
     Low = (0, 'Baja')
@@ -43,18 +41,18 @@ class Issue(AuditableModel):
     project = models.ForeignKey(Project, verbose_name='Proyecto', on_delete=models.SET_NULL, blank=True, null=True)
     status = models.IntegerField('Estado', choices=IssueStatus.choices(), default=IssueStatus.New.value[0])
     priority = models.IntegerField('Prioridad', choices=IssuePriority.choices(), default=IssuePriority.Low.value[0])
-    assigned_to = models.ForeignKey(User, verbose_name='Asignado a', on_delete=models.SET_NULL, blank=True, null=True, related_name='assigned_issues')
+    assigned_to = models.ForeignKey(User, verbose_name='Asignado a', on_delete=models.SET_NULL, blank=True, null=True,
+                                    related_name='assigned_issues')
 
     class Meta:
         verbose_name = 'Incidencia'
         verbose_name_plural = 'Incidencias'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
 class IssueAttachment(Attachment):
-
     ''' Archivo adjunto de una incidencia '''
 
     issue = models.ForeignKey(Issue, related_name='issue_attachments')

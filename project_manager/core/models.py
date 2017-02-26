@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 
 
 class Attachment(models.Model):
-
     ''' Archivo Adjunto.'''
 
     attachment = models.FileField(upload_to="attachments/", help_text="(optional)")
@@ -18,25 +17,25 @@ class Attachment(models.Model):
         verbose_name_plural = 'Archivos Adjuntos'
         abstract = True
 
-    def __unicode__(self):
-        self.filename
+    def __str__(self):
+        return self.filename
 
 
 class AuditableModel(models.Model):
-
     ''' Modelo abstracto utilizado para realizar auditorías '''
 
     created = models.DateTimeField('Fecha/Hora de creación', auto_now_add=True)
-    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="%(app_label)s_%(class)s_created_related")
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                   related_name="%(app_label)s_%(class)s_created_related")
     modified = models.DateTimeField('Fecha/Hora de última actualización', auto_now_add=True)
-    modified_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="%(app_label)s_%(class)s_modified_related")
+    modified_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                    related_name="%(app_label)s_%(class)s_modified_related")
 
     class Meta:
         abstract = True
 
 
 class SlugModel(models.Model):
-
     ''' Modelo abstracto utilizado para manejar el campo slug '''
 
     name = models.CharField('Nombre', max_length=120)
@@ -45,7 +44,7 @@ class SlugModel(models.Model):
     class Meta:
         abstract = True
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def save(self, *args, **kwargs):

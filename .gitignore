@@ -62,4 +62,6 @@ target/
 .ipynb_checkpoints
 
 # utils
+.idea/
 *.json
+project_manager/media/

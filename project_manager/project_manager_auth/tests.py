@@ -1,17 +1,19 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib.auth.models import User
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from selenium.webdriver.firefox.webdriver import WebDriver
+from django.test import Client
 
 from .constants import LOGIN_URL, DASHBOARD_URL
 
+from django.test.utils import override_settings
+from django.test import TestCase
 
-class ProjectManagerAuthTests(StaticLiveServerTestCase):
 
+@override_settings(DEBUG=True)
+class ProjectManagerAuthTests(TestCase):
     @classmethod
     def setUpClass(self):
-        self.browser = WebDriver()
+        self.client = Client
         self.demo_username = 'obi_wan_kenobi'
         self.demo_email = 'obi_wan@kenobi.com'
         self.demo_password = 'skywalker'
@@ -20,42 +22,31 @@ class ProjectManagerAuthTests(StaticLiveServerTestCase):
 
     @classmethod
     def tearDownClass(self):
-        self.browser.quit()
+        # self.browser.quit()
         super(ProjectManagerAuthTests, self).tearDownClass()
 
     def test_login_username(self):
         """ Login por username """
 
-        self.u = User.objects.create(username=self.demo_username, email=self.demo_email, password='passowrd')
+        self.u = User.objects.create(username=self.demo_username, email=self.demo_email, password='password')
         self.u.set_password(self.demo_password)
         self.u.save()
 
-        self.browser.get('%s%s' % (self.live_server_url, LOGIN_URL))
+        self.client.login(username=self.demo_username, password=self.demo_password)
 
-        username_input = self.browser.find_element_by_name("username")
-        username_input.send_keys(self.demo_username)
+        response = self.client.get(LOGIN_URL)
 
-        password_input = self.browser.find_element_by_name("password")
-        password_input.send_keys(self.demo_password)
+        self.assertRedirects(response, DASHBOARD_URL)
 
-        self.browser.find_element_by_xpath('//input[@type="submit"]').click()
-
-        self.assertEqual(self.browser.current_url, '{}{}'.format(self.live_server_url, DASHBOARD_URL))
-
-    def test_login_email(self):
+    def test_login_error(self):
         """ Login por email """
 
-        self.u = User.objects.create(username=self.demo_username, email=self.demo_email, password='passowrd')
+        self.u = User.objects.create(username=self.demo_username, email=self.demo_email, password='password')
         self.u.set_password(self.demo_password)
         self.u.save()
 
-        self.browser.get('%s%s' % (self.live_server_url, LOGIN_URL))
+        login = self.client.login(username=self.demo_username, password='error')
+        self.assertFalse(login)
 
-        username_input = self.browser.find_element_by_name("username")
-        username_input.send_keys(self.demo_email)
-
-        password_input = self.browser.find_element_by_name("password")
-        password_input.send_keys(self.demo_password)
-
-        self.browser.find_element_by_xpath('//input[@type="submit"]').click()
-        self.assertEqual(self.browser.current_url, '{}{}'.format(self.live_server_url, DASHBOARD_URL))
+        response = self.client.get(LOGIN_URL)
+        self.assertEqual(response.status_code, 200)

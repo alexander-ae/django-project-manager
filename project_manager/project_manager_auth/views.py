@@ -4,9 +4,7 @@ import logging
 
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.views import logout_then_login
-from django.shortcuts import render_to_response as render, redirect
-from django.template import RequestContext as ctx
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from django.utils import timezone
 
 
@@ -47,15 +45,10 @@ def login(request):
     else:
         form = LoginForm()
 
-    return render('project_manager_auth/login.html', locals(),
-        context_instance=ctx(request))
+    return render(request, 'project_manager_auth/login.html', locals())
 
 
 def logout(request):
     """ Cierra la sesión del usuario y redirecciona al login """
 
     return logout_then_login(request, LOGIN_URL)
-
-
-def dashboard(request):
-    return HttpResponse('ok')

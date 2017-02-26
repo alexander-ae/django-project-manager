@@ -7,5 +7,6 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^auth/', include('project_manager_auth.urls', namespace='project_manager_auth'))
+    url(r'^auth/', include('project_manager_auth.urls', namespace='project_manager_auth')),
+    url(r'', include('dashboard.urls', namespace='dashboard')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
-from project_manager.utils import get_secret
+from config.utils import get_secret
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -21,7 +21,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = get_secret('ALLOWED_HOSTS')
 
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -30,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'project_manager_auth',
+    'dashboard',
     'projects',
     'issues',
 
@@ -42,17 +42,16 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'project_manager.urls'
+ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'project_manager/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -65,8 +64,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'project_manager.wsgi.application'
-
+WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
@@ -76,7 +74,6 @@ DATABASES = {
         'PASSWORD': get_secret('DB_PASSWORD'),
     }
 }
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -93,18 +90,16 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 LANGUAGE_CODE = 'es-pe'
 TIME_ZONE = 'America/Lima'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "project_manager/static"),
 ]
 
 LOGGING = {
@@ -135,3 +130,5 @@ LOGGING = {
         }
     }
 }
+
+LOGIN_URL = '/auth/login/'

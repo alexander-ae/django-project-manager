@@ -7,15 +7,13 @@ import floppyforms as forms
 
 
 class LoginForm(forms.Form):
-
     ''' Formulario de acceso al sistema '''
 
     username = forms.CharField(label='Usuario / Email')
     username.widget.attrs.update({'autofocus': 'true', 'tabindex': '1', 'placeholder': 'obi_wan@kenoby.com',
-        'class': 'form-control'})
+                                  'class': 'form-control'})
 
-    password = forms.CharField(label='Contraseña', min_length=6,
-        max_length=32, widget=forms.PasswordInput)
+    password = forms.CharField(label='Contraseña', min_length=6, max_length=32, widget=forms.PasswordInput)
     password.widget.attrs.update({'tabindex': '2', 'placeholder': 'skywalker', 'class': 'form-control'})
 
     def clean_username(self):
