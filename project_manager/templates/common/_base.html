@@ -1,13 +1,23 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <title>{% block meta_title %}{% endblock meta_title %}</title>
+
+  <link rel="stylesheet" href="{% static 'bootstrap/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'adminLTE/css/AdminLTE.min.css' %}">
+  <link rel="stylesheet" href="{% static 'adminLTE/css/skin-blue-light.css' %}">
 </head>
 
 <body>
-  {% include 'common/_messages.html' %}
+{% include 'common/_messages.html' %}
 
-  {% block content %}
-  {% endblock content %}
+{% include 'common/_header.html' %}
+
+{% block content %}
+{% endblock content %}
 </body>
 </html>

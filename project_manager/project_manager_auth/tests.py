@@ -9,7 +9,7 @@ from django.test.utils import override_settings
 from django.test import TestCase
 
 
-@override_settings(DEBUG=True)
+# @override_settings(DEBUG=True)
 class ProjectManagerAuthTests(TestCase):
     @classmethod
     def setUpClass(self):

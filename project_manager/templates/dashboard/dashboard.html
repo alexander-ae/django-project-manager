@@ -1,5 +1,20 @@
 {% extends 'common/_base.html' %}
 
 {% block content %}
-dashboard
+  <h1>dashboard</h1>
+
+  <nav>
+    <a class='btn' href='{% url "projects:new" %}'>Agregar Proyecto</a>
+  </nav>
+
+  <section>
+    <h2>Proyectos</h2>
+
+    <ol>
+      {% for project in projects %}
+        <li><a href='{{ project.get_absolute_url }}'>{{ project.name }}</a></li>
+      {% endfor %}
+
+    </ol>
+  </section>
 {% endblock content %}

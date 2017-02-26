@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+import sys
 from config.utils import get_secret
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -28,12 +29,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'floppyforms',
+
     'project_manager_auth',
     'dashboard',
     'projects',
     'issues',
-
-    'floppyforms',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -132,3 +134,27 @@ LOGGING = {
 }
 
 LOGIN_URL = '/auth/login/'
+
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+if 'test' in sys.argv:
+    import logging
+
+    # logging.disable(logging.CRITICAL)
+    # settings.DEBUG = False
+    # settings.TEMPLATE_DEBUG = False
+    PASSWORD_HASHERS = [
+        'django.contrib.auth.hashers.MD5PasswordHasher',
+    ]
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'test',
+        }
+    }
+    MIDDLEWARE_CLASSES = [
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+    ]
